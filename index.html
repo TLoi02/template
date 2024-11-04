@@ -1,0 +1,162 @@
+<html>
+
+<head>
+    <title></title>
+    <link rel="stylesheet" href="./css/payment_plugin.css">
+    <link rel="stylesheet" href="./css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="/hpp/css/font_awesome_v2.min.css">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    
+</head>
+
+<body>
+    <input type="hidden" id="new" value="1">
+    <input type="hidden" id="ccn_invalid_txt" value="Ο αριθμός της κάρτας δεν είναι έγκυρος.">
+    <input type="hidden" id="date_invalid_txt" value="Η ημερομηνία λήξης δεν είναι έγκυρη.">
+    <input type="hidden" id="cvc_invalid_txt" value="Η τιμή CVV δεν είναι έγκυρη.">
+    <input type="hidden" id="cn_invalid_txt" value="Παρακαλούμε συμπλήρωσε το όνομα κατόχου της κάρτας.">
+    <div class="container-fluid">
+        <div class="row">
+            <div id="pluginContainer" class="col-md-6">
+                <div class="panel panelCustom">
+                    <form id="creditCardForm" class="form-horizontal jsonly" action="" method="POST" autocomplete="off">
+                        <input type="hidden" id="tokenized_elem">
+                        <input type="hidden" id="tokenized_url"
+                            value="/hpp/send_card_details?session_id=e468e9cac943e2a3769360ee5f5f836a7a4a0919">
+                        <div id="formBody">
+                            <!-- CARDNUMBER -->
+                            <div class="form-group">
+                                <label for="ccn" class="col-sm-12 payment-label">
+                                    Αριθμός πιστωτικής κάρτας<i id="errorIconCCN"
+                                        class="fa-solid fa-circle-exclamation fa-xs" style="display: none;"></i>
+                                </label>
+                                <div class="col-sm-12">
+                                    <input class="input" inputmode="numeric" pattern="[0-9 ]*" type="text" id="ccn"
+                                        name="ccn" placeholder="0000 0000 0000 0000" maxlength="23" required="true">
+                                    <div id="ccicon" class="ccicon" width="750" height="471" viewbox="0 0 750 471"><img
+                                            id="ccicon_img" src="./images/white.svg" alt=""></div>
+                                    <div id="ccn-validation-empty" class="error-box" width="750" height="471"
+                                        viewbox="0 0 750 471"></div>
+                                    <div id="ccn-validation-invalid" class="error-box" width="750" height="471"
+                                        viewbox="0 0 750 471"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <!-- EXPIRY DATE -->
+                                <div class="col-xs-6 exp_month_year_container">
+                                    <label for="exp_month" class="payment-label">
+                                        Ημερομηνία λήξης
+                                        <i id="errorIconDate"
+                                            class="fa-solid fa-circle-exclamation fa-xs" style="display: none;"></i>
+                                    </label>
+                                    <div>
+                                        <input class="input" id="exp_month_year" name="exp_month_year"
+                                            placeholder="ΜΜ/ΕΕ" inputmode="numeric" pattern="[0-9\/]*" type="text"
+                                            required="true">
+                                        <div id="month-year-validation" class="error-box" width="750" height="471"
+                                            viewbox="0 0 750 471"></div>
+                                        <input id="exp_month" name="exp_month" type="hidden">
+                                        <input id="exp_year" name="exp_year" type="hidden">
+                                    </div>
+                                </div>
+                                <!-- CVV2 -->
+                                <div class="col-xs-6 ccv2_container">
+                                    <label for="cvc_code" class="payment-label">
+                                        CVV2 <i id="errorIconCVV" class="fa-solid fa-circle-exclamation fa-xs"
+                                            style="display: none;"></i>
+                                    </label>
+                                    <div>
+                                        <input class="input" inputmode="numeric" pattern="[0-9]*" type="text"
+                                            id="cvc_code" name="cvc_code" placeholder="000" maxlength="3"
+                                            required="true">
+                                        <div id="cvv_icon" width="700" height="471" viewbox="0 0 750 471"><img
+                                                src="https://pay4.payabl.com/hpp/images/payment/CVV_Icon.png" alt=""></div>
+                                        <div id="cvv-validation" class="error-box" width="750" height="471"
+                                            viewbox="0 0 750 471"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- CARDHOLDER NAME -->
+                            <div class="form-group">
+                                <label for="cardholder_name" class="col-sm-12 payment-label">
+                                    Όνομα κατόχου κάρτας<i id="errorIconCN" class="fa-solid fa-circle-exclamation fa-xs"
+                                        style="display: none;"></i>
+                                </label>
+                                <div class="col-xs-12">
+                                    <input class="input" type="text" id="cardholder_name" name="cardholder_name"
+                                        maxlength="50" placeholder="Ονοματεπώνυμο" required="true">
+                                    <div id="name-validation" class="error-box" width="750" height="471"
+                                        viewbox="0 0 750 471"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- NO SCRIPT START -->
+                    <noscript>
+                        <form id="creditCardForm" class="form-horizontal"
+                            action="send_card_details?session_id=e468e9cac943e2a3769360ee5f5f836a7a4a0919" method="POST"
+                            autocomplete="off">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label for="cardholder_name" class="col-sm-3 control-label">Όνομα κατόχου
+                                        κάρτας</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="cardholder_name"
+                                            name="cardholder_name" maxlength="50" placeholder="Full Name"
+                                            required="true">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="ccn" class="col-sm-3 control-label">Αριθμός πιστωτικής κάρτας</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="ccn" name="ccn"
+                                            placeholder="xxxx xxxx xxxx xxxx" maxlength="23" required="true">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cvc_code" class="col-sm-3 control-label">Κωδικός επαλήθευσης
+                                        κάρτας</label>
+                                    <div class="col-sm-8">
+                                        <input type="password" class="form-control" id="cvc_code" name="cvc_code"
+                                            placeholder="xxx" maxlength="4" required="true">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exp_month" class="col-sm-3 control-label">Ημερομηνία λήξης</label>
+                                    <div id="exp-date-div" class="col-sm-4 noscript-input-div">
+                                        <input id="exp_month" class="form-control noscript-input-text-month"
+                                            name="exp_month" type="text" maxlength="2" required="true" placeholder="ΜΜ">
+                                        <h4>/</h4>
+                                        <input id="exp_year" class="form-control noscript-input-text-year"
+                                            name="exp_year" type="text" maxlength="4" required="true"
+                                            placeholder="ΕΕΕΕ">
+                                    </div>
+                                </div>
+                                <div class="text-center fixed">
+                                    <img class="img_logo" src="/hpp/images/payment/visa-secure_blu_72dpi.jpg" width=36>
+                                    <img class="img_logo" src="/hpp/images/payment/mc_idcheck_vrt_pos.png" width=36>
+                                    <input class="noscript-input-submit" type="submit" value="Verify" />
+                                    <h5>Your javascript is disabled. Please make sure to enable it.</h5>
+                                    <h5>Before proceeding with your purchase, please verify your card details by
+                                        clicking on the verify button.</h5>
+                                </div>
+                            </div>
+                        </form>
+                    </noscript>
+                    <!-- NO SCRIPT END -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="./js/jquery.js"></script>
+    <script type="text/javascript" src="./js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="./js/imask.js"></script>
+    <script type="text/javascript" src="./js/ddslick.js"></script>
+    <script type="text/javascript" src="./js/do_payment_plugin.js"></script>
+</body>
+
+</html>
